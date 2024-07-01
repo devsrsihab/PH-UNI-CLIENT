@@ -4,6 +4,7 @@ import {
   UserSwitchOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, MenuProps, theme } from "antd";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -50,11 +51,11 @@ const MainLayout = () => {
       >
         <div
           style={{
-            height: "1.5rem",
-            marginTop: "1rem",
-            marginBottom: '1.5rem',
             color: "white",
-            padding: "1rem",
+            padding: '1rem',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
           className="demo-logo-vertical"
         >
@@ -78,7 +79,7 @@ const MainLayout = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            <Outlet/>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
