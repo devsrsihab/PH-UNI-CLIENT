@@ -1,10 +1,9 @@
-
-const Contact = () => {
+const ComponentName = () => {
     return (
         <div>
-            <h2>This is Contact Page</h2>
+            <h2>This is ComponentName Page</h2>
         </div>
     );
 };
 
-export default Contact;
+export default ComponentName;
