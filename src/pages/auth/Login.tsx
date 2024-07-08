@@ -1,28 +1,28 @@
-import { Button } from "antd";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Flex, Space } from "antd";
+import { SubmitHandler } from "react-hook-form";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setuser, TUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import PHForm from "../../components/form/PHForm";
+import PHInput from "../../components/form/PHInput";
 
 const Login = () => {
   const [login] = useLoginMutation();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<TPayload>({
-    defaultValues: { id: "A-0001", password: "112233445566" },
-  });
   const distpatch = useAppDispatch();
+
+  //   defaultValues: { id: "A-0001", password: "112233445566" },
 
   type TPayload = {
     id: string;
     password: string;
   };
 
-  const onSubmit: SubmitHandler<TPayload> = async (
-    payload: TPayload
-  ): Promise<void> => {
+  const onSubmit: SubmitHandler<TPayload> = async (payload: TPayload) => {
+    console.log(payload);
     const userInfo = {
       id: payload.id,
       password: payload.password,
@@ -41,12 +41,16 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Login</h1>
-      <input {...register("id", { required: true })} type="text" />
-      <input {...register("password", { required: true })} type="password" />
-      <Button htmlType="submit">Submit</Button>
-    </form>
+    <Flex gap={33} justify="center" align="center" style={{ height: "100vh" }}>
+      <PHForm onSubmit={onSubmit}>
+        <Space direction="vertical" size="large">
+          <h1>Login</h1>
+          <PHInput label="Enter ID" type="text" name="id" />
+          <PHInput label="Enter Password" type="password" name="password" />
+          <Button htmlType="submit">Submit</Button>
+        </Space>
+      </PHForm>
+    </Flex>
   );
 };
 
