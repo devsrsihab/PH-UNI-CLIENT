@@ -7,23 +7,21 @@ import { studentPaths } from "./student.route";
 import Login from "../pages/auth/Login";
 
 const router = createBrowserRouter([
+  { path: "/", element: <App /> },
   {
-    path: "/",
+    path: "/admin",
     element: <App />,
-    children: [
-      {
-        path: "admin",
-        children: routeGenerator(adminPaths),
-      },
-      {
-        path: "faculty",
-        children: routeGenerator(facultyPaths),
-      },
-      {
-        path: "student",
-        children: routeGenerator(studentPaths),
-      },
-    ],
+    children: routeGenerator(adminPaths),
+  },
+  {
+    path: "/faculty",
+    element: <App />,
+    children: routeGenerator(facultyPaths),
+  },
+  {
+    path: "/student",
+    element: <App />,
+    children: routeGenerator(studentPaths),
   },
   {
     path: "/auth/login",
