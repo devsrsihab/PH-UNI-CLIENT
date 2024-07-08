@@ -14,7 +14,10 @@ const Login = () => {
   const navigate = useNavigate();
   const distpatch = useAppDispatch();
 
-  //   defaultValues: { id: "A-0001", password: "112233445566" },
+  const defaultValues = {
+    id: "A-0001",
+    password: "112233445566",
+  };
 
   type TPayload = {
     id: string;
@@ -42,7 +45,7 @@ const Login = () => {
 
   return (
     <Flex gap={33} justify="center" align="center" style={{ height: "100vh" }}>
-      <PHForm onSubmit={onSubmit}>
+      <PHForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <Space direction="vertical" size="large">
           <h1>Login</h1>
           <PHInput label="Enter ID" type="text" name="id" />
