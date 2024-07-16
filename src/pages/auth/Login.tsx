@@ -30,16 +30,16 @@ const Login = () => {
       id: payload.id,
       password: payload.password,
     };
-
-    const toastId = toast.loading("Loading data");
+    const toastId = 3123213;
+    toast.loading("Loading data", { id: toastId });
     try {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       distpatch(setuser({ user: user, token: res.data.accessToken }));
       navigate(`/${user.role}/dashboard`);
-      toast.success("Login Successfully", { id: toastId });
+      toast.success("Login Successfully", { id: toastId, duration: 1000 });
     } catch (error) {
-      toast.error("incorrect username or password", { id: toastId });
+      console.log(error);
     }
   };
 
