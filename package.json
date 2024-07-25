@@ -12,7 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
     "@hookform/resolvers": "^3.9.0",
-    "@reduxjs/toolkit": "^2.2.6",
+    "@reduxjs/toolkit": "https://pkg.csb.dev/reduxjs/redux-toolkit/commit/06a30ee4/@reduxjs/toolkit",
     "antd": "^5.18.3",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",

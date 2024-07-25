@@ -74,11 +74,11 @@ const AcademicSemester = () => {
     {
       title: "Action",
       key: "x",
-      render : () => (
+      render: () => (
         <div>
           <Button>Update</Button>
         </div>
-      )
+      ),
     },
   ];
 
@@ -101,16 +101,14 @@ const AcademicSemester = () => {
   };
 
   return (
-    <div>
-      <Table
-        loading={isFetching}
-        columns={columns}
-        dataSource={tableData}
-        rowKey="_id"
-        onChange={onChange}
-        showSorterTooltip={{ target: "sorter-icon" }}
-      />
-    </div>
+    <Table
+      loading={isFetching}
+      columns={columns}
+      dataSource={tableData}
+      rowKey="_id"
+      onChange={onChange}
+      showSorterTooltip={{ target: "sorter-icon" }}
+    />
   );
 };
 
