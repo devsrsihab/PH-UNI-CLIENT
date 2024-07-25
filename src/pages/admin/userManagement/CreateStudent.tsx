@@ -1,7 +1,7 @@
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHSelect from "../../../components/form/PHSelect";
 import { bloodGroupOptions, genderOptions } from "../../../constant/global";
 import PHDatePicker from "../../../components/form/PHDatePicker";
@@ -10,6 +10,46 @@ import {
   useGetAllSemesterQuery,
 } from "../../../redux/features/admin/academicManagement.Api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.Api";
+import { toast } from "sonner";
+
+
+const formDefaultValue = {
+  name: {
+    firstName: "Ivor",
+    middleName: "Theodore Walter",
+    lastName: "Bartlett",
+  },
+  gender: "others",
+  bloodGroup: "O+",
+  email: "naroxav@mailinator.com",
+  contactNo: "Officia accusamus qu",
+  emergencyContact: "Sed sint veniam rep",
+  presentAddress: "Sed sint ratione eu",
+  permanentAddress: "Velit lorem possimus",
+  guardian: {
+    fatherName: "Brandon Myers",
+    fatherOccupation: "Ea pariatur A sunt",
+    fatherContactNo: "Aliquip ipsum est d",
+    motherName: "Noble Carlson",
+    motherContactNo: "Architecto sit et in",
+    motherOccupation: "Ut nemo omnis amet ",
+  },
+  localGuardian: {
+    name: "Asher Carr",
+    occupation: "Ducimus excepturi s",
+    contact: "Et blanditiis irure ",
+    address: "Sunt et qui natus v",
+  },
+  admissionSemester: "665f87acf1c46f19487dc2db",
+  academicDepartment: "665f87fef1c46f19487dc2e9",
+};
+
+
+
+
+
+
+
 
 const CreateStudent = () => {
   const [addStudent] = useAddStudentMutation();
@@ -28,21 +68,30 @@ const CreateStudent = () => {
     label: department.name,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    const studentData = {
-      password: "12122ddewe",
-      student: data,
-    };
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(studentData));
-    addStudent(formData);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const loader = toast.loading("Student Creating...", { duration: 1000 });
+    try {
+      console.log(data);
+      const studentData = {
+        password: "12122ddewe",
+        student: data,
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(studentData));
+      formData.append("file", data.image);
+      await addStudent(formData);
+
+      toast.success("Student Created Successfully", { id: loader });
+    } catch (error) {
+      console.log(error);
+      toast.error("Something Went Wrong", { id: loader });
+    }
   };
 
   return (
     <Row>
       <Col span={24}>
-        <PHForm onSubmit={onSubmit}>
+        <PHForm defaultValues={formDefaultValue} onSubmit={onSubmit}>
           <Row gutter={8}>
             {/* ======= Personal info========== */}
             <Divider>Personal Info</Divider>
@@ -71,6 +120,21 @@ const CreateStudent = () => {
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHInput label="Email" name="email" type="text" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
+              />
             </Col>
 
             {/* ======= Contact info========== */}

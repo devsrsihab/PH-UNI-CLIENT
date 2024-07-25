@@ -13,7 +13,7 @@ export type TSidebarItem = {
   key: string;
   label: ReactNode;
   children?: TSidebarItem[];
-};
+} | undefined;
 //* type for Route
 export type TRoute = {
   path: string;
