@@ -61,6 +61,7 @@ const baseQueryWithReferenceToken: BaseQueryFn<
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
+  tagTypes: ["SemesterRegistration"],
   baseQuery: baseQueryWithReferenceToken,
   endpoints: () => ({}),
 });
