@@ -6,9 +6,16 @@ type TSelectProps = {
   name: string;
   options?: { value: string; label: string; disabled?: boolean }[];
   disabled?: boolean;
+  mode: "multiple" | undefined;
 };
 
-const PHSelect = ({ label, name, options, disabled = false }: TSelectProps) => {
+const PHSelect = ({
+  label,
+  name,
+  options,
+  disabled = false,
+  mode = undefined,
+}: TSelectProps) => {
   return (
     <Controller
       name={name}
@@ -19,6 +26,7 @@ const PHSelect = ({ label, name, options, disabled = false }: TSelectProps) => {
             placeholder={label}
             style={{ width: "100%" }}
             options={options}
+            mode={mode}
             disabled={disabled}
           />
           {error && <small style={{ color: "red" }}>{error.message}</small>}
