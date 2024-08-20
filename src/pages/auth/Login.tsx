@@ -34,9 +34,17 @@ const Login = () => {
     toast.loading("Loading data", { id: toastId });
     try {
       const res = await login(userInfo).unwrap();
+
+      console.log(res);
       const user = verifyToken(res.data.accessToken) as TUser;
       distpatch(setuser({ user: user, token: res.data.accessToken }));
-      navigate(`/${user.role}/dashboard`);
+
+      if (res?.data.neetPassWord) {
+        navigate("/auth/change-password");
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
+
       toast.success("Login Successfully", { id: toastId, duration: 1000 });
     } catch (error) {
       console.log(error);
