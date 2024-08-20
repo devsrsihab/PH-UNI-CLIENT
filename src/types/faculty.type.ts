@@ -2,41 +2,42 @@ export type TFaculty = {
   _id: string;
   id: string;
   designation: string;
-  name: TName;
+  name: TFName;
   user: string;
   gender: string;
   dateOfBirth: string;
-  academicFaculty: TAcademicFaculty;
-  academicDepartment: TAcademicDepartment;
+  academicFaculty: TFAcademicFaculty;
+  academicDepartment: TFAcademicDepartment;
   email: string;
   contactNo: string;
   emergencyContact: string;
   presentAddress: string;
   permanentAddress: string;
   profileImg: string;
+  fullName: string;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export type TName =  {
+export type TFName =  {
   firstName: string;
   middleName: string;
   lastName: string;
   _id: string;
 }
 
-export type TAcademicFaculty =  {
+export type TFAcademicFaculty =  {
   _id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export type TAcademicDepartment =  {
+export type TFAcademicDepartment =  {
   _id: string;
   name: string;
-  academicFaculty: TAcademicFaculty;
+  academicFaculty: TFAcademicFaculty;
   createdAt: string;
   updatedAt: string;
 }

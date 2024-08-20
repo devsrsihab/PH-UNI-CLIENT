@@ -18,10 +18,12 @@ export type TMeta = {
 
 export type TResponse<T> = {
   data?: T;
+  status?:any;
   error?: TError;
   meta?: TMeta;
   message: string;
   success: boolean;
+  ok?: boolean;
 };
 
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;

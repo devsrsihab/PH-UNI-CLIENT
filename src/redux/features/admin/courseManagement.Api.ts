@@ -1,16 +1,14 @@
-import { TCourse, TQueryParams, TResponseRedux, TSemester } from "../../../types";
+import {
+  TCourse,
+  TQueryParams,
+  TResponseRedux,
+  TSemester,
+} from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    addRegistaredSemester: builder.mutation({
-      query: (data) => ({
-        url: "/semester-registrations/create",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["SemesterRegistration"],
-    }),
+    // all get queries
     getAllRegistaredSemester: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -55,6 +53,46 @@ const courseManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getAllFaculties: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: TQueryParams) =>
+            params.append(item.name, item.value as string)
+          );
+        }
+        return {
+          url: "/faculties",
+          method: "GET",
+          params,
+        };
+      },
+      providesTags: ["Courses"],
+      transformResponse: (response: TResponseRedux<TCourse>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
+    getCourseFaculty: builder.query({
+      query: (id) => ({ url: `courses/${id}/getfaculties`, method: "GET" }),
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+        };
+      },
+    }),
+
+    // all post query
+    addRegistaredSemester: builder.mutation({
+      query: (data) => ({
+        url: "/semester-registrations/create",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["SemesterRegistration"],
+    }),
     addCourse: builder.mutation({
       query: (data) => ({
         url: "/courses/create-course",
@@ -78,7 +116,26 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SemesterRegistration"],
     }),
+    addOfferedCourse: builder.mutation({
+      query: (data) => ({
+        url: "offered-courses/create",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useAddFacultiesInCourseMutation,useAddRegistaredSemesterMutation, useGetAllRegistaredSemesterQuery, useUpdateRegistaredSemesterMutation, useGetAllCoursesQuery, useAddCourseMutation } = courseManagementApi;
+export const {
+  // all get hoos
+  useGetAllCoursesQuery,
+  useGetAllRegistaredSemesterQuery,
+  useGetAllFacultiesQuery,
+  useGetCourseFacultyQuery,
+  // all post hooks
+  useAddOfferedCourseMutation,
+  useAddFacultiesInCourseMutation,
+  useAddRegistaredSemesterMutation,
+  useUpdateRegistaredSemesterMutation,
+  useAddCourseMutation,
+} = courseManagementApi;

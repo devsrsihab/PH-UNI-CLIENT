@@ -19,7 +19,6 @@ const SemesterRegistration = () => {
     },
   ]);
 
-  console.log(academicSemester);
   const academicSemesterOptions = academicSemester?.data?.map((semester) => ({
     value: semester._id,
     label: `${semester.name} ${semester.year}`,
@@ -61,6 +60,7 @@ const SemesterRegistration = () => {
             options={academicSemesterOptions}
           />
           <PHSelect
+          
             label="Status"
             name="status"
             options={semesterStatusOptions}

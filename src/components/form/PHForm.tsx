@@ -36,10 +36,27 @@ const PHForm = ({
 
   const methods = useForm(formConfig);
 
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit(data);
-    methods.reset();
+  const submit: SubmitHandler<FieldValues> = async (data) => {
+    const { reset } = methods;
+    try {
+      const response = await onSubmit(data);
+
+      // Check response status or structure for success
+      if (response?.status === 200 || response?.ok) {
+        // Only reset form if submission is successful
+        reset();
+      } else {
+        // Handle different response statuses or errors
+        const errorMessage =
+          response?.error?.data?.message || "Submission failed";
+
+        console.log(errorMessage);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <FormProvider {...methods}>
       <Form layout="vertical" onFinish={methods.handleSubmit(submit)}>
